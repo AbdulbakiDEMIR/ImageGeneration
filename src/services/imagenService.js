@@ -60,7 +60,8 @@ function fileToBase64(file) {
 }
 
 const aiPromptGenFun = async (promptText, file) =>{
-    const genAI = new GoogleGenerativeAI(process.env.REACT_APP_GEMINI_API_KEY);
+    // const genAI = new GoogleGenerativeAI(process.env.REACT_APP_GEMINI_API_KEY);
+    const genAI = new GoogleGenerativeAI("AIzaSyCrxgBUvZzPlvtjYblJyQ_WrpIZvGlkURk");
 
 	const model = genAI.getGenerativeModel({
 		model: "gemini-2.5-flash-lite",
@@ -90,7 +91,8 @@ const aiPromptGenFun = async (promptText, file) =>{
 }
 
 const aiImageGenFun = async (promptText, file) =>{
-    const genAI = new GoogleGenerativeAI(process.env.REACT_APP_GEMINI_API_KEY);
+    // const genAI = new GoogleGenerativeAI(process.env.REACT_APP_GEMINI_API_KEY);
+    const genAI = new GoogleGenerativeAI("AIzaSyCrxgBUvZzPlvtjYblJyQ_WrpIZvGlkURk");
 
 	const model = genAI.getGenerativeModel({
 		model: "gemini-2.5-flash-image",
