@@ -37,7 +37,7 @@ export const ImageUploader = ({ setPreviewUrl, inputHeight }) => {
             <div 
                 className="pre-image-component" 
                 // CSS değişkeni ile dinamik yükseklik ayarı (Bottom padding gibi davranır)
-                style={{"--chat-input-height": `${inputHeight + 40}px`, marginBottom: `${inputHeight + 40}px`}} 
+                style={{"--chat-input-height": `${inputHeight + 50}px`, marginBottom: `${inputHeight + 40}px`}} 
             >
                 <div
                     onClick={handleClick}

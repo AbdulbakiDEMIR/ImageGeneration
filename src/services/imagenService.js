@@ -1,6 +1,7 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
 
+
 const systemPrompt = {
 	"role_definition": {
 		"identity": "Senior Art Director & AI Prompt Engineer",
@@ -42,7 +43,6 @@ const systemPrompt = {
 }
 
 export async function generateImage(promptText, file) {
-
 	console.log(promptText, file)
 	const prompt = await aiPromptGenFun(promptText, file[0]?.file);
 	const image = await aiImageGenFun(prompt, file[0]?.file);
@@ -60,8 +60,10 @@ function fileToBase64(file) {
 }
 
 const aiPromptGenFun = async (promptText, file) =>{
+	const apikey = window.apikey;
+
     // const genAI = new GoogleGenerativeAI(process.env.REACT_APP_GEMINI_API_KEY);
-    const genAI = new GoogleGenerativeAI("AIzaSyCrxgBUvZzPlvtjYblJyQ_WrpIZvGlkURk");
+    const genAI = new GoogleGenerativeAI(apikey);
 
 	const model = genAI.getGenerativeModel({
 		model: "gemini-2.5-flash-lite",
@@ -91,12 +93,15 @@ const aiPromptGenFun = async (promptText, file) =>{
 }
 
 const aiImageGenFun = async (promptText, file) =>{
+	const apikey = window.apikey;
+
     // const genAI = new GoogleGenerativeAI(process.env.REACT_APP_GEMINI_API_KEY);
-    const genAI = new GoogleGenerativeAI("AIzaSyCrxgBUvZzPlvtjYblJyQ_WrpIZvGlkURk");
+    const genAI = new GoogleGenerativeAI(apikey);
 
 	const model = genAI.getGenerativeModel({
 		model: "gemini-2.5-flash-image",
 	});
+	systemPrompt.role = "definitely generate pictures"
 	let text = {
 		systemPrompt: systemPrompt,
 		userPrompt: promptText

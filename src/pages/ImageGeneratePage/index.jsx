@@ -5,11 +5,14 @@ import { ImageUploader } from './layouts/ImageUploader';
 import { generateImage } from '../../services/imagenService';
 import { ChatDialogs } from './layouts/ChatDialogs';
 
+const bekle = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
 export const ImageGeneratePage = () => {
     const [previewUrl, setPreviewUrl] = useState(null);
     const [inputHeight, setInputHeight] = useState(0); 
     const [images, setImages] = useState([]);
     const [dialogs, setDialogs] = useState([])
+    const [loading, setLoading] = useState(false)
     
 
     // previewUrl değiştiğinde images listesine ekle
@@ -52,15 +55,17 @@ export const ImageGeneratePage = () => {
                 }
             }
         ])
+        setLoading(true)
         handleReset()
         const AIimages = await generateImage(prompt, images);
         // setGeneratedImages([AIimages]);
+        // await bekle(20000);
         setDialogs(prev=>[...prev, 
             {
                 id:uuidv4(),
                 role: "ai",
                 message:{
-                    text: "",
+                    text: "dsadsd",
                     images: [{
                         id: uuidv4(),
                         url: AIimages,
@@ -70,7 +75,7 @@ export const ImageGeneratePage = () => {
                 }
             }
         ])
-
+        setLoading(false)
     };
 
     return (
@@ -91,6 +96,7 @@ export const ImageGeneratePage = () => {
                     <ChatDialogs 
                         dialogs={dialogs}
                         height={inputHeight}
+                        loading={loading}
                     />
                 )}
             </div>

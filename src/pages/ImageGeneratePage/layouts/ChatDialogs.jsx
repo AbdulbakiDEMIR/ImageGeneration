@@ -1,7 +1,8 @@
 import React, { useRef, useEffect } from 'react'
 
-export const ChatDialogs = ({dialogs, height}) => {
+export const ChatDialogs = ({dialogs, height, loading}) => {
     const lastAiMessageRef = useRef(null);
+    const loadingRef = useRef(null);
     useEffect(() => {
         // Eğer ref bir elemente bağlandıysa (yani son mesaj AI ise)
         if (lastAiMessageRef.current) {
@@ -11,6 +12,15 @@ export const ChatDialogs = ({dialogs, height}) => {
             });
         }
     }, [dialogs]);
+    useEffect(() => {
+        // Eğer ref bir elemente bağlandıysa (yani son mesaj AI ise)
+        if (loadingRef.current) {
+            loadingRef.current.scrollIntoView({ 
+                behavior: 'smooth', 
+                block: 'start' // 'start': Elemanın üstü ekranın üstüne hizalanır
+            });
+        }
+    }, [loading]);
     console.log("-----------------------------------")
 
     return (
@@ -37,6 +47,12 @@ export const ChatDialogs = ({dialogs, height}) => {
                     </div>
                 )
             })}
+            {loading && (
+                <div ref={loadingRef} className='loading-container' style={{"--dialog-container-height": `${height + 40}px`}} >
+                    <div className="loader">
+                    </div>
+                </div>
+            )}
         </div>
     )
 }

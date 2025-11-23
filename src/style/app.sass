@@ -142,7 +142,7 @@ body
     width: 100%
     .pre-image-component
         width: 100%
-        margin: 0 auto
+        margin: 1rem auto 0 auto
         max-width: 48rem
         height: calc( 100vh - var(--chat-input-height)  )
         .pre-image-container
@@ -206,9 +206,8 @@ body
         background: #565656
         border-radius: 3px
     &::-webkit-scrollbar-thumb 
-            background: #b1b1b1
-            
-            border-radius: 3px
+        background: #b1b1b1
+        border-radius: 3px
         
 
     .message-container
@@ -219,11 +218,11 @@ body
 
         .message-box
             min-height: 1rem
-            padding: 1rem 0.85rem
             color: #ccc
             font-weight: 400
             font-size: .92rem
             &.user
+                padding: 1rem 0.85rem
                 max-width: 28rem   
                 margin-left: auto 
                 border-radius: 1rem
@@ -239,3 +238,36 @@ body
                         width: 8.4rem
                         height: 12rem
                         object-fit: cover
+            &.ai
+                display: flex
+                flex-direction: column-reverse
+                .message-images
+                    margin-top: 0.5rem 
+                    img
+                        border-radius: 0.5rem
+                        width: 15rem
+                        height: 20rem
+                        object-fit: cover
+
+
+
+
+.loading-container
+    width: 100%
+    padding: calc( (100vh -  var(--dialog-container-height)) / 2 - 7rem)
+    display: flex
+    align-items: center
+    justify-content: center
+
+/* HTML: <div class="loader"></div> */
+.loader
+    width: 7rem
+    aspect-ratio: 1
+    border-radius: 50%
+    border: 1rem solid
+    border-color: #ffffff #0000
+    animation: l1 1s infinite
+
+@keyframes l1
+    to
+        transform: rotate(.5turn)

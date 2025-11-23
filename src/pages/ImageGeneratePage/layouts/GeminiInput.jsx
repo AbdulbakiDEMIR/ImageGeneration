@@ -3,7 +3,7 @@ import { LuBrain, LuSendHorizontal } from "react-icons/lu";
 import { IoAttach } from "react-icons/io5";
 import { IoMdCloseCircle } from "react-icons/io";
 
-export const GeminiInput = ({ onSend, images = [], handleRemoveImage, setPreviewUrl, onHeightChange }) => {
+export const GeminiInput = ({ images = [], setPreviewUrl,  handleRemoveImage,  onSend, onHeightChange }) => {
     const [promptLocal, setPromptLocal] = useState('');
     const textareaRef = useRef(null);
     const containerRef = useRef(null);
