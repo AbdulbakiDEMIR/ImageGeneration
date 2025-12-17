@@ -27,10 +27,11 @@ export const ImageUploader = ({ setPreviewUrl, inputHeight }) => {
         setIsDragging(false);
         const droppedFile = e.dataTransfer.files[0];
         handleFile(droppedFile);
+        e.dataTransfer.files[0] = undefined;
     };
 
     const handleClick = () => { fileInputRef.current.click(); };
-    const onInputChange = (e) => { handleFile(e.target.files[0]); };
+    const onInputChange = (e) => { handleFile(e.target.files[0]); e.target.files[0] = undefined;};
 
     return (
         <div className="image-uploader">

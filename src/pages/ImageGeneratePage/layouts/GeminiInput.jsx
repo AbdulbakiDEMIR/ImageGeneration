@@ -2,21 +2,33 @@ import React, { useState, useRef, useEffect } from 'react';
 import { LuBrain, LuSendHorizontal } from "react-icons/lu";
 import { IoAttach } from "react-icons/io5";
 import { IoMdCloseCircle } from "react-icons/io";
+import { useParams } from 'react-router-dom';
+import { useImageStore } from '../../../store/imageStore';
+import { useChatStore } from '../../../store/chatStore'; // Store importu
 
-export const GeminiInput = ({ images = [], setPreviewUrl,  handleRemoveImage,  onSend, onHeightChange }) => {
+export const GeminiInput = ({  ChatState, onSend, onHeightChange }) => {
+    const { id } = useParams();
     const [promptLocal, setPromptLocal] = useState('');
     const textareaRef = useRef(null);
     const containerRef = useRef(null);
+
+    const imageData = useImageStore((state) => state.imageData);
+    const addImage = useImageStore((state) => state.addImage);
+    const removeImage = useImageStore((state) => state.removeImage);
+    const removeAllImage = useImageStore((state) => state.removeAllImage);
+
+    useEffect(() => {
+        removeAllImage()
+        setPromptLocal('')
+    }, [id]);
 
     // 1. Dosya Seçme Mantığı (React Yöntemi)
     const handleFileChange = (e) => {
         const file = e.target.files[0];
         if (file) {
             const url = URL.createObjectURL(file);
-            
-            // HATA BURADAYDI: setPreviewUrl(url) yerine aşağıdakini yazın:
-            // Parent component bu objeden .url ve .file okumaya çalışıyor.
-            setPreviewUrl({
+
+            addImage({
                 url: url,
                 file: file
             }); 
@@ -69,17 +81,16 @@ export const GeminiInput = ({ images = [], setPreviewUrl,  handleRemoveImage,  o
             handleSubmit();
         }
     };
-
     return (
         <div ref={containerRef} className="chat-input-container">
             <div className="chat-input-area">
                 {/* Önizleme Alanı */}
-                {images.length > 0 && (
+                {imageData.length > 0 && (
                     <div className="image-preview-container">
-                        {images.map((imgObj) => (
+                        {imageData.map((imgObj) => (
                             <div className='image-preview-item' key={imgObj.id}>
                                 <div className='close-icon'>
-                                    <IoMdCloseCircle onClick={() => handleRemoveImage(imgObj.id)} />
+                                    <IoMdCloseCircle onClick={() => removeImage(imgObj.id)} />
                                 </div>
                                 <img
                                     src={imgObj.url}
@@ -95,9 +106,11 @@ export const GeminiInput = ({ images = [], setPreviewUrl,  handleRemoveImage,  o
                     value={promptLocal}
                     onChange={(e) => setPromptLocal(e.target.value)}
                     onKeyDown={handleKeyDown}
-                    placeholder="Buraya bir istem girin"
+                    placeholder={ChatState.chatWait ? "Yanıt üretiliyor..." :"Buraya bir istem girin"}
                     className="input-textarea"
                     rows={1}
+                    disabled={ChatState.chatWait }
+
                 />
 
                 {/* İkonlar ve Butonlar */}
@@ -110,26 +123,24 @@ export const GeminiInput = ({ images = [], setPreviewUrl,  handleRemoveImage,  o
                                 id="chat-image-upload"
                                 type="file"
                                 accept="image/*"
+                                value=""
                                 style={{ display: 'none' }}
                                 onChange={handleFileChange} // React Event'i buraya bağlandı
                             />
                         </label>
-
                         <button className="media-button" title="LLM Seç">
                             <LuBrain size={20} />
                         </button>
                     </div>
 
                     <div className="send-button">
-                        
-                            <button
-                                onClick={handleSubmit}
-                                title="Gönder"
-                                disabled={promptLocal.length === 0}
-                            >
-                                <LuSendHorizontal size={18} />
-                            </button>
-                        
+                        <button
+                            onClick={handleSubmit}
+                            title="Gönder"
+                            disabled={promptLocal.length === 0 || ChatState.chatWait }
+                        >
+                            <LuSendHorizontal size={18} />
+                        </button>
                     </div>
                 </div>
             </div>

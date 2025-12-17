@@ -1,12 +1,19 @@
 import React, { useRef, useEffect } from 'react'
+import { ImageDownloader } from '../../../components/ImageDownloader';
+import { HiMiniMagnifyingGlassPlus } from "react-icons/hi2";
+import { useImageFullpageStore } from "../../../store/ImageFullpageStore";
 
 export const ChatDialogs = ({dialogs, height, loading}) => {
-    const lastAiMessageRef = useRef(null);
+    const lastMessageRef = useRef(null);
     const loadingRef = useRef(null);
+
+    const IF_setOpen = useImageFullpageStore((state) => state.setOpen);
+    const IF_setCurrent = useImageFullpageStore((state) => state.setCurrent);
+    
     useEffect(() => {
         // Eğer ref bir elemente bağlandıysa (yani son mesaj AI ise)
-        if (lastAiMessageRef.current) {
-            lastAiMessageRef.current.scrollIntoView({ 
+        if (lastMessageRef.current) {
+            lastMessageRef.current.scrollIntoView({ 
                 behavior: 'smooth', 
                 block: 'start' // 'start': Elemanın üstü ekranın üstüne hizalanır
             });
@@ -21,28 +28,33 @@ export const ChatDialogs = ({dialogs, height, loading}) => {
             });
         }
     }, [loading]);
-    console.log("-----------------------------------")
+
+     const handleFullpage = (item) =>{
+        IF_setCurrent(item)
+        IF_setOpen(true)
+    }
 
     return (
         <div className="dialog-container"  style={{"--dialog-container-height": `${height + 40}px`, marginBottom: `${height + 40}px`}}>
             {dialogs.map((dialog, index)=>{
                 const role = dialog.role;
-                const isLastAiMessage = index === dialogs.length - 1 && role === 'ai';
-                console.log(dialog)
                 return(
-                    <div ref={isLastAiMessage ? lastAiMessageRef : null} key={index} className="message-container">
+                    <div ref={lastMessageRef} key={index} className="message-container">
                         <div className={`message-box ${role}`}>
-                            {dialog.message.images?.length > 0 && (
+                            {dialog.images?.length > 0 && (
                                 <div className='message-images'>
-                                    {dialog.message.images.map(image=>{    
+                                    {dialog.images.map((image)=>{
                                         return(
-                                            <img key={image.id} src={image.url} alt={"image "+image.id}/>
+                                                <div key={image.id}  className={"message-image-item"}>
+                                                    <HiMiniMagnifyingGlassPlus className="fullpage-icon" onClick={()=>handleFullpage(image)}/>
+                                                    <ImageDownloader image={image} />
+                                                </div>  
                                         )
                                     })}
                                 </div>
                             )}
 
-                            {dialog.message.text}
+                            {dialog.content}
                         </div>
                     </div>
                 )
@@ -56,3 +68,5 @@ export const ChatDialogs = ({dialogs, height, loading}) => {
         </div>
     )
 }
+
+
