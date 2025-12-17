@@ -6,26 +6,33 @@ import { LoginPage } from "../pages/Login/LoginPage";
 export const routes = [
     // Korumalı Sayfalar (Sadece üye girebilir)
     { 
-        path: '/ImageGeneration/chat/:id', 
+        path: '/chat/:id', 
         element: <ImageGeneratePage/>, 
         isPrivate: true 
     },
     { 
-        path: '/ImageGeneration/chat/', 
+        path: '/chat/', 
         element: <ImageGeneratePage/>, 
         isPrivate: true 
     },
     { 
-        path: '/ImageGeneration/images/', 
+        path: '/images/', 
         element: <Images/>, 
         isPrivate: true 
     },
     
     // Misafir Sayfaları (Üye girmesin, sadece misafirler)
     { 
-        path: '/ImageGeneration/login/', 
+        path: '/login/', 
         element: <LoginPage/>, 
         isPrivate: false, 
         isGuestOnly: true // YENİ EKLENDİ
     },
+    // Opsiyonel: Kök dizine gelindiğinde login'e yönlendir
+    {
+        path: '/',
+        element: <LoginPage/>,
+        isPrivate: false,
+        isGuestOnly: true
+    }
 ];

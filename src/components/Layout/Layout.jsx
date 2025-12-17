@@ -72,7 +72,7 @@ export const Layout = () => {
 				const path = url.pop()
 				if(path === 'chat'){
 					if(chat){document.title = chat.title}
-					else{navigate(`/ImageGeneration/chat/`);}
+					else{navigate(`/chat/`);}
 				}else{
 					document.title = "Image Generate"
 				}

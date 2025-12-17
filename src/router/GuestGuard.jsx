@@ -19,7 +19,7 @@ export const GuestGuard = ({ children }) => {
     // Eğer token VARSA, kullanıcı zaten giriş yapmıştır.
     // Onu login sayfasında tutma, ana sayfaya gönder.
     if (token) {
-        return <Navigate to="/ImageGeneration/chat/" replace />;
+        return <Navigate to="/chat/" replace />;
     }
 
     // Token yoksa (misafir ise) sayfayı göster

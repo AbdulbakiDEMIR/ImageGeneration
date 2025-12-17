@@ -1,3 +1,4 @@
+// src/router/AuthGuard.jsx
 import { Navigate, useLocation } from "react-router-dom";
 import { useLoginStore } from "../store/LoginStore"; // Önceki adımda oluşturduğumuz store
 
@@ -8,7 +9,7 @@ export const AuthGuard = ({ children }) => {
     // Eğer token yoksa Login sayfasına yönlendir
     // state={{ from: location }} kısmı, giriş yaptıktan sonra kullanıcıyı kaldığı yere geri göndermek için kullanılır (opsiyonel)
     if (!token) {
-        return <Navigate to="/ImageGeneration/login/" state={{ from: location }} replace />;
+        return <Navigate to="/login/" state={{ from: location }} replace />;
     }
     // Token varsa çocuk bileşeni (sayfayı) render et
     return children;

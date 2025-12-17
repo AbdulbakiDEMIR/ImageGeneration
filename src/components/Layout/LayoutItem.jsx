@@ -86,7 +86,7 @@ export const  LayoutItem = ({ text, path, editable=false}) => {
 	
 	return (
 		<div className={`layout-item-container ${active ? 'active' : ''} ${show ? 'hover' : ''}`}>
-			<Link to={'/ImageGeneration/chat/'+path} className={`layout-item`}>
+			<Link to={'/chat/'+path} className={`layout-item`}>
 				<span>{text}</span>
 			</Link>
 			{editable &&

@@ -43,7 +43,7 @@ export const LayoutUser = () => {
             <Popover.Body>
                 {/* 3. Linke tıklandığında kapanması için onClick ekledik */}
                 <Link 
-                    to={`/ImageGeneration/images`} 
+                    to={`/images`} 
                     className='user-popover-item' 
                     onClick={handleClose}
                 >

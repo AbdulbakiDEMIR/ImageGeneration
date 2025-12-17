@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
-import axiosClient from '../api/axiosClient';
+import axiosClient from '../api/axiosClient.js';
 
 export const useLoginStore = create(
     persist(

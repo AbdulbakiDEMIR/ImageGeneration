@@ -1,7 +1,7 @@
 // src/index.js
 
 import { createRoot } from 'react-dom/client';
-import { AppRouter } from './router/AppRouter';
+import { AppRouter } from './router/AppRouter.jsx';
 import './style/app.css';
 
 

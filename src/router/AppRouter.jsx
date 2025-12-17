@@ -11,7 +11,7 @@ export const AppRouter = () => {
     const isLayout = useLayoutStore((state) => state.isLayout);
 
     return (
-        <Router>
+        <Router basename="/ImageGeneration">
             <div style={{ display: "flex" }}>
                 <ScrollToTop />
                 {isLayout && <Layout />}

@@ -36,7 +36,7 @@ export const LoginPage = () => {
         try {
             await fetchLogin(username, password);
             // Başarılı olursa yönlendir
-            navigate('/ImageGeneration/chat');
+            navigate('/chat');
         } catch (err) {
             // Hata mesajını backend'den al veya genel bir mesaj göster
             setError("Giriş başarısız. Kullanıcı adı veya şifre hatalı.");
